@@ -1,29 +1,47 @@
-const resetButton = document.querySelector('button');
 const container = document.querySelector('.container');
 
 // Make Grid
-const gridSize = 96;
+const gridSize = 16;
 
 const createGrid = (boxNum) => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('wrapper');
+    container.appendChild(wrapper);
     for (i = 0; i < boxNum; i++) {
-    const row = document.createElement('div');
-    row.classList.add('grid-row');
+        const row = document.createElement('div');
+        row.classList.add('grid-row');
 
     for (j = 0; j < boxNum; j++) {
-    const heightWidth = 960 / gridSize
-    const gridBox = document.createElement('div');
-    gridBox.classList.add('grid-box');
-    gridBox.style.width = `${heightWidth}px`;
-    gridBox.style.height = `${heightWidth}px`;
-    gridBox.addEventListener("mouseenter", () => {
+        const heightWidth = 960 / boxNum
+        const gridBox = document.createElement('div');
+        gridBox.classList.add('grid-box');
+        gridBox.style.width = `${heightWidth}px`;
+        gridBox.style.height = `${heightWidth}px`;
+
+        //Hover changes to black
+        gridBox.addEventListener("mouseenter", () => { 
         gridBox.style.backgroundColor = 'black';
     });
     row.appendChild(gridBox);
     }
-
-    container.appendChild(row);
+    wrapper.appendChild(row);
     }
 }
+
 createGrid(gridSize);
 
-//Hover
+//RESET
+const resetButton = document.querySelector('button');
+resetButton.addEventListener('click', () => {
+    const wrapper = document.querySelector('.wrapper')
+    wrapper.remove()
+
+    let userSize = Number(prompt("What size do you want the new grid? Maximum 100."));
+    while (userSize > 100 || isNaN(userSize)==true) {
+    userSize = Number(prompt("What size do you want the new grid? Maximum 100."));
+    }
+    
+    createGrid(userSize);
+})
+
+
