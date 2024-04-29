@@ -1,13 +1,5 @@
 const container = document.querySelector('.container');
 
-const randomColor = () => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-
-    return {r, g, b}
-}
-
 // Make Grid
 const gridSize = 16;
 
@@ -20,7 +12,6 @@ const createGrid = (boxNum) => {
         row.classList.add('grid-row');
 
     for (j = 0; j < boxNum; j++) {
-        const {r, g, b} = randomColor();
         const heightWidth = 960 / boxNum
         const gridBox = document.createElement('div');
         gridBox.classList.add('grid-box');
@@ -28,9 +19,12 @@ const createGrid = (boxNum) => {
         gridBox.style.height = `${heightWidth}px`;
 
         //Hover changes to black
-        const bgColor = "rgb(" + r + "," + g + "," + b + ")";
-        gridBox.addEventListener("mouseenter", () => { 
-        gridBox.style.background = bgColor;
+        let x = 0
+        gridBox.addEventListener("mouseenter", (e) => { 
+        if (e.target) { 
+            x+=0.1;
+        }
+        gridBox.style.background = `rgb(0, 0, 0, ${x})`;
     });
     row.appendChild(gridBox);
     }
